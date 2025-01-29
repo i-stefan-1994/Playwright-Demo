@@ -52,11 +52,12 @@ When('User clicks on Pricing Menu', async function () {
 
 Then('It should Display correct Product lists in left Nav', async function () {
 
-    var leftNavProducts = await page.locator('div[id="sidenav__list"]').textContent()
+    var leftNavProducts = await page.locator('#sidenav__list').textContent()
 
     var productArray = await leftNavProducts?.split("\n").map((item) => { return item.trim(); });
+    const filteredProductArray = productArray?.filter(n => n)
 
-    expect(productArray).toEqual(expect.arrayContaining(['Live', 'App Live']));
+    expect(filteredProductArray).toEqual(expect.arrayContaining(['Live (includes Bug Capture)', 'App Live']));
 
 });
 

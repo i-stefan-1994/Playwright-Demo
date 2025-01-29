@@ -14,4 +14,6 @@ export default class CommonActions {
     async click(selector){
         await this.page.click(selector);
     }
+
+    //TODO: Continue with POM implementation
 }
