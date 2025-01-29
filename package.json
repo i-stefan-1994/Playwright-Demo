@@ -12,6 +12,7 @@
     "@types/node": "^22.10.10"
   },
   "dependencies": {
-    "@cucumber/cucumber": "^11.2.0"
+    "@cucumber/cucumber": "^11.2.0",
+    "ts-node": "^10.9.2"
   }
 }

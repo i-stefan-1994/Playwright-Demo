@@ -1,16 +1,14 @@
-const { Given, When, Then, Before, After, setDefaultTimeout } = require("@cucumber/cucumber");
-
-const { chromium, expect } = require("@playwright/test");
-
-const { Page } = require("playwright");
+import { Browser, Page } from "@playwright/test";
+import { Given, When, Then, Before, After, setDefaultTimeout } from '@cucumber/cucumber'
+import { chromium, expect } from "@playwright/test";
 
 setDefaultTimeout(60 * 1000);
 
-let page, browser;
+let page: Page, browser: Browser;
 
 Before(async function () {
 
-    browser = await chromium.launch({ headless: false });
+    browser = await chromium.launch({ headless: true });
 
     const context = await browser.newContext();
 
@@ -56,7 +54,7 @@ Then('It should Display correct Product lists in left Nav', async function () {
 
     var leftNavProducts = await page.locator('div[id="sidenav__list"]').textContent()
 
-    var productArray = await leftNavProducts.split("\n").map((item) => { return item.trim(); });
+    var productArray = await leftNavProducts?.split("\n").map((item) => { return item.trim(); });
 
     expect(productArray).toEqual(expect.arrayContaining(['Live', 'App Live']));
 
