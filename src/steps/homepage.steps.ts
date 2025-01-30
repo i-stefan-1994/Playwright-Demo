@@ -55,9 +55,9 @@ Then('It should Display correct Product lists in left Nav', async function () {
     var leftNavProducts = await page.locator('#sidenav__list').textContent()
 
     var productArray = await leftNavProducts?.split("\n").map((item) => { return item.trim(); });
-    const filteredProductArray = productArray?.filter(n => n)
+    const filteredProductArray = productArray?.filter(n => n) //filters out empty elements
 
-    expect(filteredProductArray).toEqual(expect.arrayContaining(['Live (includes Bug Capture)', 'App Live']));
+    expect(filteredProductArray).toEqual(expect.arrayContaining(['Live (includes Bug Capture)', 'App Live'])); //pattern matches any elements in the given array
 
 });
 

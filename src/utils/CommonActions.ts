@@ -15,5 +15,14 @@ export default class CommonActions {
         await this.page.click(selector);
     }
 
-    //TODO: Continue with POM implementation
+    async fill(selector, text){
+        await this.page.fill(selector, text)
+    }
+
+    async getText(selector){
+        const text = await this.page.locator(selector).textContent();
+        if(text === null){
+            throw new Error('No text found')
+        }
+    }
 }
