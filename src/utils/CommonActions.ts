@@ -23,6 +23,12 @@ export default class CommonActions {
         const text = await this.page.locator(selector).textContent();
         if(text === null){
             throw new Error('No text found')
+        }else{
+            return text.trim();
         }
+    }
+
+    async isChecked(selector){
+        return await this.page.isChecked(selector);
     }
 }
