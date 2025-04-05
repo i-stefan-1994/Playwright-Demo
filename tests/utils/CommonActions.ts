@@ -1,7 +1,7 @@
 import { Page } from 'playwright';
 
 export default class CommonActions {
-    private page: Page;
+    page: Page;
 
     constructor(page: Page) {
         this.page = page;
