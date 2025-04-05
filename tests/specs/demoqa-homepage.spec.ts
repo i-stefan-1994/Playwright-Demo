@@ -1,3 +1,5 @@
+// @ts-check
+
 import { expect, test } from "playwright/test";
 import { POM_Manager } from "../pages/pom_manager";
 

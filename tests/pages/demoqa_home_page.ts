@@ -6,7 +6,7 @@ export class DemoQA_HomePage extends CommonActions{
 
     private demo_QA_homepage_URL = 'https://demoqa.com/';
 
-    constructor(page: Page){
+    constructor(public readonly page: Page){
         super(page)
     };
 
