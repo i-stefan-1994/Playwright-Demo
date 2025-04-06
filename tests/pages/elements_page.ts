@@ -22,7 +22,7 @@ export class ElementsPage extends CommonActions {
     }
 
     async navigateToElementsPage() {
-        await this.page.goto(this.locators.URL, {waitUntil: 'domcontentloaded'});
+        await this.navigate(this.locators.URL);
     }
 
     async selectTextCategory() {
@@ -93,6 +93,9 @@ export class ElementsPage extends CommonActions {
         return this.getOutput().locator(this.locators.output_permanentAddress);
     }
 
+    /**
+     * @param field - 'name', 'email', 'currentAddres', 'permanentAddress'
+     */
     async expectFieldToBeMissing(field: 'name' | 'email' | 'currentAddress' | 'permanentAddress'){
         const valueMap = {
             'name': this.getOutputUsername(),
