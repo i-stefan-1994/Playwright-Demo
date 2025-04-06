@@ -6,7 +6,10 @@ const userData = {
     email: 'test@test.com',
     currentAddress : 'Test street, Testsylvannia',
     permanentAddress: 'Testissimo, Testudo'
-}
+};
+const wrongUserData = {
+    email: 'wrongemailformat'
+};
 
 test.describe('Elements page tests', () => {
     test.beforeEach(async ({pom_manager, page}) => {
@@ -55,4 +58,8 @@ test.describe('Elements page tests', () => {
         await elementsPage.expectFieldToBeMissing('permanentAddress');
     });
 
+    test('Fill out wrong email format', async() => {
+        await elementsPage.fillTextbox({email: wrongUserData.email});
+        await elementsPage.expectWrongEmailFormatError();
+    });
 });

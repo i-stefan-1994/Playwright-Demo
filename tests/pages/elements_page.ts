@@ -13,7 +13,8 @@ export class ElementsPage extends CommonActions {
         output_name: '#name',
         output_email: '#email',
         output_currentAddress: '#currentAddress',
-        output_permanentAddress: '#permanentAddress'
+        output_permanentAddress: '#permanentAddress',
+        emailFormatError: /field-error/
     }
 
     constructor(public readonly page: Page) {
@@ -100,6 +101,10 @@ export class ElementsPage extends CommonActions {
             'permanentAddress': this.getOutputPermanentAddress()
         }
         await expect(valueMap[field]).toHaveCount(0);
+    }
+
+    async expectWrongEmailFormatError(){
+        await expect(this.page.locator(this.locators.email)).toHaveClass(this.locators.emailFormatError);
     }
 
     /**
