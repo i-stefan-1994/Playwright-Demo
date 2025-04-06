@@ -1,4 +1,4 @@
-import { Page } from "playwright/test";
+import { expect, Page } from "playwright/test";
 import CommonActions from "../utils/CommonActions";
 
 export class ElementsPage extends CommonActions {
@@ -8,7 +8,12 @@ export class ElementsPage extends CommonActions {
         email: '#userEmail',
         currentAddress: '#currentAddress',
         permanentAddress: '#permanentAddress',
-        submit: '#submit'
+        submit: '#submit',
+        output: '#output',
+        output_name: '#name',
+        output_email: '#email',
+        output_currentAddress: '#currentAddress',
+        output_permanentAddress: '#permanentAddress'
     }
 
     constructor(public readonly page: Page) {
@@ -16,8 +21,7 @@ export class ElementsPage extends CommonActions {
     }
 
     async navigateToElementsPage() {
-        await this.page.goto(this.locators.URL);
-        await this.page.waitForLoadState('networkidle');
+        await this.page.goto(this.locators.URL, {waitUntil: 'domcontentloaded'});
     }
 
     async selectTextCategory() {
@@ -52,6 +56,13 @@ export class ElementsPage extends CommonActions {
         await this.page.locator(this.locators.submit).click();
     }
 
+    /**
+     * 
+     * @param name
+     * @param email
+     * @param currentAddress
+     * @param permanentAddress
+     */
     async fillTextbox({ name, email, currentAddress, permanentAddress }: { name?: string; email?: string; currentAddress?: string; permanentAddress?: string }) {
         await this.selectTextCategory();
         await this.fillUserName(name);
@@ -59,5 +70,52 @@ export class ElementsPage extends CommonActions {
         await this.fillCurrentAddress(currentAddress);
         await this.fillPermanentAddress(permanentAddress);
         await this.clickSubmitButton();
+    }
+
+    getOutput(){
+        return this.page.locator(this.locators.output);
+    }
+
+    getOutputUsername(){
+        return this.getOutput().locator(this.locators.output_name);
+    }
+
+    getOutputEmail(){
+        return this.getOutput().locator(this.locators.output_email);
+    }
+
+    getOutputCurrentAddress(){
+        return this.getOutput().locator(this.locators.output_currentAddress);
+    }
+
+    getOutputPermanentAddress(){
+        return this.getOutput().locator(this.locators.output_permanentAddress);
+    }
+
+    async expectFieldToBeMissing(field: 'name' | 'email' | 'currentAddress' | 'permanentAddress'){
+        const valueMap = {
+            'name': this.getOutputUsername(),
+            'email': this.getOutputEmail(),
+            'currentAddress': this.getOutputCurrentAddress(),
+            'permanentAddress': this.getOutputPermanentAddress()
+        }
+        await expect(valueMap[field]).toHaveCount(0);
+    }
+
+    /**
+     * @param field - 'name', 'email', 'currentAddres', 'permanentAddress'
+     * @param expectedValue 
+     */
+    async expectOutputValue(field: 'name' | 'email' | 'currentAddress' | 'permanentAddress', expectedValue: string){
+        const valueMap = {
+            'name': this.locators.output_name,
+            'email': this.locators.output_email,
+            'currentAddress': this.locators.output_currentAddress,
+            'permanentAddress': this.locators.output_permanentAddress
+        }
+
+        const rawText = await this.getOutput().locator(valueMap[field]).textContent();
+        const splitText = rawText?.split(':')[1].trim();
+        expect(splitText).toBe(expectedValue);
     }
 }
