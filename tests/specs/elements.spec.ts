@@ -6,7 +6,8 @@ let elementsPage;
 const userData = {
     username: 'Tester',
     email: 'test@test.com',
-    currentAddress : 'Test street, Testsylvannia'
+    currentAddress : 'Test street, Testsylvannia',
+    permanentAddress: 'Testissimo, Testudo'
 }
 
 test.describe('Elements page tests', () => {
@@ -18,10 +19,7 @@ test.describe('Elements page tests', () => {
     });
 
     test('Fill out all text box elements', async() => {
-        await elementsPage.selectTextCategory();
-        await elementsPage.fillUserName(userData.username);
-        await elementsPage.fillEmail(userData.email);
-        await elementsPage.fillCurrentAddress(userData.currentAddress);
+        await elementsPage.fillTextbox({name: userData.username, email: userData.email, currentAddress: userData.currentAddress, permanentAddress: userData.permanentAddress})
     });
 
     //fill out everything but name, email, address, permanent address, check submit
