@@ -38,13 +38,13 @@ export default class CommonActions {
 
     async textIsVisible(...text: string[]): Promise<void> {
         for (const name of text) {
-            return await expect(this.page.getByText(name, {exact: true})).toBeVisible();
+            await expect(this.page.getByText(name, {exact: true})).toBeVisible();
         }
     };
 
     async textIsNotVisible(...text: string[]): Promise<void>{
         for (const name of text){
-            return await expect(this.page.getByText(name, {exact: true})).toBeHidden();
+            await expect(this.page.getByText(name, {exact: true})).toBeHidden();
         }
     }
 }
