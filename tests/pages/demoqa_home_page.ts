@@ -10,31 +10,31 @@ export class DemoQA_HomePage extends CommonActions{
         super(page)
     };
 
-    async navigateToMainPage(){
+    async navigateToMainPage(): Promise<void>{
         await this.page.goto(this.demo_QA_homepage_URL);
     };
 
-    async navigateToElementsCategory(){
+    async navigateToElementsCategory(): Promise<void>{
        await this.page.getByText('Elements').click();
     }
 
-    async navigateToFormsCategory(){
+    async navigateToFormsCategory(): Promise<void>{
         await this.page.getByText('Forms').click();
     }
 
-    async navigateToAlertsFramesAndWindowsCategory(){
+    async navigateToAlertsFramesAndWindowsCategory(): Promise<void>{
         await this.page.getByText('Alerts, Frame & Windows').click();
     }
 
-    async navigateToWidgetsCategory(){
+    async navigateToWidgetsCategory(): Promise<void>{
         await this.page.getByText('Widgets').click();
     }
 
-    async navigateToInteractionsCategory(){
+    async navigateToInteractionsCategory(): Promise<void>{
         await this.page.getByText('Interactions').click();
     }
 
-    async navigateToBookStoreApplicationCategory(){
+    async navigateToBookStoreApplicationCategory(): Promise<void>{
         await this.page.getByText('Book Store Application').click();
     };
 }

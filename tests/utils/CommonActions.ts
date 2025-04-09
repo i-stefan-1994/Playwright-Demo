@@ -1,5 +1,5 @@
 import { Page } from 'playwright';
-import { expect } from 'playwright/test';
+import { expect, Locator } from 'playwright/test';
 
 export default class CommonActions {
 
@@ -11,15 +11,15 @@ export default class CommonActions {
         await this.page.goto(url, { waitUntil: 'domcontentloaded' });
     }
 
-    async click(selector) {
+    async click(selector: string): Promise<void> {
         await this.page.click(selector);
     }
 
-    async fill(selector, text) {
+    async fill(selector: string, text: string): Promise<void> {
         await this.page.fill(selector, text)
     }
 
-    async getText(selector) {
+    async getText(selector: string): Promise<string> {
         const text = await this.page.locator(selector).textContent();
         if (text === null) {
             throw new Error('No text found')
@@ -28,23 +28,23 @@ export default class CommonActions {
         }
     }
 
-    async isChecked(selector) {
+    async isChecked(selector: string): Promise<boolean> {
         return await this.page.isChecked(selector);
     }
 
-    async hasUrl(url: string | RegExp) {
+    async hasUrl(url: string | RegExp): Promise<void> {
         return await expect(this.page).toHaveURL(url);
     }
 
-    async textIsVisible(...text: string[]) {
+    async textIsVisible(...text: string[]): Promise<void> {
         for (const name of text) {
-            return await expect(this.page.getByText(name)).toBeVisible();
+            return await expect(this.page.getByText(name, {exact: true})).toBeVisible();
         }
     };
 
-    async textIsNotVisible(...text: string[]){
+    async textIsNotVisible(...text: string[]): Promise<void>{
         for (const name of text){
-            return await expect(this.page.getByText(name)).toBeHidden();
+            return await expect(this.page.getByText(name, {exact: true})).toBeHidden();
         }
     }
 }

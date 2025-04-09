@@ -22,9 +22,15 @@ test.describe("Checkbox tests", () => {
     });
 
     test('Collapse home tree and check that subfolders are not visible', async() => {
+        await checkboxPage.textIsNotVisible('Desktop', 'Documents, Downloads');
         await checkboxPage.extendAndCollapseFolderTreeByText('Home');
         await checkboxPage.textIsVisible('Desktop', 'Documents, Downloads');
         await checkboxPage.extendAndCollapseFolderTreeByText('Home');
-        await checkboxPage.textIsNotVisible('Desktop', 'Documents, Downloads');
+    });
+
+    test('Check selected files visibility - Home', async () => {
+        await checkboxPage.checkSelectedFilesResultVisibility('Home', 'not-visible');
+        await checkboxPage.checkHomeFolder();
+        await checkboxPage.checkSelectedFilesResultVisibility('Home', 'visible');
     });
 });

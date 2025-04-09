@@ -1,5 +1,7 @@
-import { expect, Page } from "playwright/test";
+import { expect, Locator, Page } from "playwright/test";
 import CommonActions from "../utils/CommonActions";
+
+type OutputField =  'name' | 'email' | 'currentAddress' | 'permanentAddress';
 
 export class ElementsPage extends CommonActions {
     private locators = {
@@ -21,39 +23,39 @@ export class ElementsPage extends CommonActions {
         super(page);
     }
 
-    async navigateToElementsPage() {
+    async navigateToElementsPage(): Promise<void> {
         await this.navigate(this.locators.URL);
     }
 
-    async selectTextCategory() {
+    async selectTextCategory(): Promise<void> {
         await this.page.getByText('Text Box').click();
     }
 
-    async fillUserName(name: string | undefined) {
+    async fillUserName(name: string | undefined): Promise<void> {
         if (name) {
             await this.page.locator(this.locators.username).fill(name);
         }
     }
 
-    async fillEmail(email: string | undefined) {
+    async fillEmail(email: string | undefined): Promise<void> {
         if (email) {
             await this.page.locator(this.locators.email).fill(email);
         }
     }
 
-    async fillCurrentAddress(currentAddress: string | undefined) {
+    async fillCurrentAddress(currentAddress: string | undefined): Promise<void> {
         if (currentAddress) {
             await this.page.locator(this.locators.currentAddress).fill(currentAddress);
         }
     }
 
-    async fillPermanentAddress(permanentAddress: string | undefined) {
+    async fillPermanentAddress(permanentAddress: string | undefined): Promise<void> {
         if (permanentAddress) {
             await this.page.locator(this.locators.permanentAddress).fill(permanentAddress);
         }
     }
 
-    async clickSubmitButton() {
+    async clickSubmitButton(): Promise<void> {
         await this.page.locator(this.locators.submit).click();
     }
 
@@ -64,7 +66,7 @@ export class ElementsPage extends CommonActions {
      * @param currentAddress
      * @param permanentAddress
      */
-    async fillTextbox({ name, email, currentAddress, permanentAddress }: { name?: string; email?: string; currentAddress?: string; permanentAddress?: string }) {
+    async fillTextbox({ name, email, currentAddress, permanentAddress }: { name?: string; email?: string; currentAddress?: string; permanentAddress?: string }): Promise<void> {
         await this.selectTextCategory();
         await this.fillUserName(name);
         await this.fillEmail(email);
@@ -73,40 +75,25 @@ export class ElementsPage extends CommonActions {
         await this.clickSubmitButton();
     }
 
-    getOutput(){
+    async getOutput(): Promise<Locator>{
         return this.page.locator(this.locators.output);
     }
 
-    getOutputUsername(){
-        return this.getOutput().locator(this.locators.output_name);
-    }
 
-    getOutputEmail(){
-        return this.getOutput().locator(this.locators.output_email);
-    }
-
-    getOutputCurrentAddress(){
-        return this.getOutput().locator(this.locators.output_currentAddress);
-    }
-
-    getOutputPermanentAddress(){
-        return this.getOutput().locator(this.locators.output_permanentAddress);
+    async getOutputField(field: OutputField): Promise<Locator>{
+        const output = await this.getOutput();
+        return output.locator(this.locators[`output_${field}`])
     }
 
     /**
-     * @param field - 'name', 'email', 'currentAddres', 'permanentAddress'
+     * @param field - 'name', 'email', 'currentAddress', 'permanentAddress'
      */
-    async expectFieldToBeMissing(field: 'name' | 'email' | 'currentAddress' | 'permanentAddress'){
-        const valueMap = {
-            'name': this.getOutputUsername(),
-            'email': this.getOutputEmail(),
-            'currentAddress': this.getOutputCurrentAddress(),
-            'permanentAddress': this.getOutputPermanentAddress()
-        }
-        await expect(valueMap[field]).toHaveCount(0);
+    async expectFieldToBeMissing(field: OutputField): Promise<void>{
+        const locator = await this.getOutputField(field);
+        await expect(locator).toHaveCount(0);
     }
 
-    async expectWrongEmailFormatError(){
+    async expectWrongEmailFormatError(): Promise<void>{
         await expect(this.page.locator(this.locators.email)).toHaveClass(this.locators.emailFormatError);
     }
 
@@ -114,7 +101,7 @@ export class ElementsPage extends CommonActions {
      * @param field - 'name', 'email', 'currentAddres', 'permanentAddress'
      * @param expectedValue 
      */
-    async expectOutputValue(field: 'name' | 'email' | 'currentAddress' | 'permanentAddress', expectedValue: string){
+    async expectOutputValue(field:OutputField, expectedValue: string): Promise<void>{
         const valueMap = {
             'name': this.locators.output_name,
             'email': this.locators.output_email,
@@ -122,7 +109,7 @@ export class ElementsPage extends CommonActions {
             'permanentAddress': this.locators.output_permanentAddress
         }
 
-        const rawText = await this.getOutput().locator(valueMap[field]).textContent();
+        const rawText = await (await this.getOutput()).locator(valueMap[field]).textContent();
         const splitText = rawText?.split(':')[1].trim();
         expect(splitText).toBe(expectedValue);
     }
