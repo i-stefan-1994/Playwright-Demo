@@ -4,15 +4,15 @@ let checkboxPage;
 
 test.describe("Checkbox tests", () => {
     test.beforeEach(async ({ pom_manager, page }) => {
-        checkboxPage = await pom_manager.getDemoQA_CheckboxPage();
+        checkboxPage = pom_manager.getDemoQA_CheckboxPage();
         await checkboxPage.navigateToCheckboxPage();
         checkboxPage.hasUrl(/checkbox/);
     });
 
     test('Checks the Home folder', async () => {
-        await checkboxPage.assertIsNotChecked();
+        await checkboxPage.assertIsCheckedOrNot('Home', 'is not checked');
         await checkboxPage.checkFolderOrFile('Home');
-        await checkboxPage.assertIsChecked();
+        await checkboxPage.assertIsCheckedOrNot('Home', 'is checked');
     });
 
     test('Extend home tree and assert visibility of subfolders', async() => {
@@ -37,10 +37,19 @@ test.describe("Checkbox tests", () => {
     });
 
     test('Check selected files visibility - Desktop', async() => {
-        await checkboxPage.checkSelectedFilesResultVisibility('Home', 'notVisible');
         await checkboxPage.extendAndCollapseFolderTreeByText('Home')
         await checkboxPage.extendAndCollapseFolderTreeByText('Desktop')
+        await checkboxPage.assertIsCheckedOrNot('Desktop', 'is not checked');
         await checkboxPage.checkFolderOrFile('Desktop');
+        await checkboxPage.assertIsCheckedOrNot('Desktop', 'is checked');
         await checkboxPage.checkSelectedFilesResultVisibility('Desktop', 'visible');
+    });
+
+    test('Check selected files for visibility - Notes', async() => {
+        await checkboxPage.extendAndCollapseFolderTreeByText('Home');
+        await checkboxPage.extendAndCollapseFolderTreeByText('Desktop');
+        await checkboxPage.checkFolderOrFile('DesktopNotes');
+        await checkboxPage.assertIsCheckedOrNot('DesktopNotes', 'is checked');
+        await checkboxPage.checkSelectedFilesResultVisibility('DesktopNotes', 'visible');
     });
 });
