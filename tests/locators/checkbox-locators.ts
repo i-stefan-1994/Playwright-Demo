@@ -2,6 +2,8 @@ export const checkboxLocators = {
     checkboxPage: 'https://demoqa.com/checkbox',
     homeCheckboxVisual: 'label[for="tree-node-home"] .rct-checkbox', //this is the visual input for the checkbox
     homeCheckbox: '#tree-node-home', //this is the real input class
+    desktopCheckboxVisual: 'label[for="tree-node-desktop"]',
+    desktopCheckbox: '#tree-node-desktop',
     folderSubfolderTextLocators: '.rct-text',
     extendAndCollapseBar: '.rct-collapse',
     resultLocator: '[id="result"]'

@@ -5,6 +5,15 @@ import { checkboxLocators, selectedFiles } from "../locators/checkbox-locators";
 
 type folderNames =  'Home' |  'Desktop' | 'Documents' | 'DocumentsWorksSpace' | 'DocumentsOffice' | 'Downloads';
 type visibilityOptions = 'visible' | 'notVisible'
+type folderAndFileNames = folderNames;
+const fileAndFolderLocators = {
+    'Home': checkboxLocators.homeCheckbox,
+    'Desktop': checkboxLocators.desktopCheckbox
+}
+const fileAndFolderVisualLocators = {
+    'Home': checkboxLocators.homeCheckboxVisual,
+    'Desktop': checkboxLocators.desktopCheckboxVisual
+}
 
 export class CheckboxPage extends CommonActions {
     constructor(page: Page) {
@@ -15,8 +24,13 @@ export class CheckboxPage extends CommonActions {
         await this.navigate(checkboxLocators.checkboxPage);
     }
 
-    async checkHomeFolder():Promise<void> {
-        await this.page.locator(checkboxLocators.homeCheckboxVisual).click();
+    async checkFolderOrFile(file_or_folder_name: folderAndFileNames): Promise<void>{
+        await this.page.locator(fileAndFolderVisualLocators[file_or_folder_name]).click();
+    }
+
+    async assertIsCheckedOrNot(file_or_folder_name: folderAndFileNames, is_checked: 'is checked' | 'is not checked'): Promise<void>{
+        const isChecked = await this.isChecked(fileAndFolderLocators[file_or_folder_name])
+        is_checked === 'is checked'? expect(isChecked).toBeTruthy : expect(isChecked).toBeFalsy();
     }
 
     async assertIsChecked():Promise<void> {
