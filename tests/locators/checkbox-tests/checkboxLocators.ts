@@ -6,6 +6,8 @@ export const checkboxLocators = {
     desktopCheckbox: '#tree-node-desktop',
     desktopNotesCheckboxVisual: 'label[for="tree-node-notes"]',
     desktopNotesCheckbox: '#tree-node-notes',
+    desktopCommandsCheckboxVisual: 'label[for="tree-node-commands"]',
+    desktopCommandsCheckbox: '#tree-node-commands',
     folderSubfolderTextLocators: '.rct-text',
     extendAndCollapseBar: '.rct-collapse',
     resultLocator: '[id="result"]'

@@ -45,11 +45,21 @@ test.describe("Checkbox tests", () => {
         await checkboxPage.checkSelectedFilesResultVisibility('Desktop', 'visible');
     });
 
-    test('Check selected files for visibility - Notes', async() => {
+    test('Check selected files for visibility - Desktop - Notes', async() => {
+        await checkboxPage.checkSelectedFilesResultVisibility('DesktopNotes', 'not-visible');
         await checkboxPage.extendAndCollapseFolderTreeByText('Home');
         await checkboxPage.extendAndCollapseFolderTreeByText('Desktop');
         await checkboxPage.checkFolderOrFile('DesktopNotes');
         await checkboxPage.assertIsCheckedOrNot('DesktopNotes', 'is checked');
         await checkboxPage.checkSelectedFilesResultVisibility('DesktopNotes', 'visible');
+    });
+
+    test('Check selected files for visibility - Desktop - Commands', async() => {
+        await checkboxPage.checkSelectedFilesResultVisibility('DesktopCommands', 'not-visible');
+        await checkboxPage.extendAndCollapseFolderTreeByText('Home');
+        await checkboxPage.extendAndCollapseFolderTreeByText('Desktop');
+        await checkboxPage.checkFolderOrFile('DesktopCommands');
+        await checkboxPage.assertIsCheckedOrNot('DesktopCommands', 'is checked');
+        await checkboxPage.checkSelectedFilesResultVisibility('DesktopCommands', 'visible');
     });
 });

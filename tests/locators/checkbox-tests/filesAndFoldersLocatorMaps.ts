@@ -8,7 +8,7 @@ export const fileAndFolderLocators = {
     'Documents': '',
     'Downloads': '',
     'DesktopNotes': checkboxLocators.desktopNotesCheckbox,
-    'DesktopCommands': ''
+    'DesktopCommands': checkboxLocators.desktopCommandsCheckbox
 }
 
 export const fileAndFolderVisualLocators = {
@@ -19,5 +19,5 @@ export const fileAndFolderVisualLocators = {
     'Documents': '',
     'Downloads': '',
     'DesktopNotes': checkboxLocators.desktopNotesCheckboxVisual,
-    'DesktopCommands': ''
+    'DesktopCommands': checkboxLocators.desktopCommandsCheckboxVisual
 }
