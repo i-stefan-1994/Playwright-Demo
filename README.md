@@ -1,1 +1,1 @@
-# Playwright-Demo
+# DemoQA Playwright automation
