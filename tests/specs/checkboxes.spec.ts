@@ -40,12 +40,7 @@ test.describe("Checkbox tests", () => {
     });
 
     test('Check selected files visibility - Desktop', async() => {
-        await checkboxPage.extendAndCollapseFolderTreeByText('Home')
-        await checkboxPage.extendAndCollapseFolderTreeByText('Desktop')
-        await checkboxPage.assertIsCheckedOrNot('Desktop', 'is not checked');
-        await checkboxPage.checkFolderOrFile('Desktop');
-        await checkboxPage.assertIsCheckedOrNot('Desktop', 'is checked');
-        await checkboxPage.checkSelectedFilesResultVisibility('Desktop', 'visible');
+        await checkboxPage.checkDesktopFiles('Desktop');
     });
 
 
@@ -55,5 +50,17 @@ test.describe("Checkbox tests", () => {
 
     test('Check selected files for visibility - Desktop - Commands', async() => {
         await checkboxPage.checkDesktopFiles('DesktopCommands');
+    });
+
+    test('Check selected files for visibility - Documents', async() => {
+        await checkboxPage.checkDocumentsSubfolders('Documents');
+    });
+
+    test('Check selected files for visibility - Documents Workspace', async() => {
+        await checkboxPage.checkDocumentsSubfolders('DocumentsWorkspace');
+    });
+
+    test('Check selected files for visibility - Documents Office', async() => {
+        await checkboxPage.checkDocumentsSubfolders('DocumentsOffice');
     });
 });
