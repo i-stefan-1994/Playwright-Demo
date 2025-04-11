@@ -1,0 +1,17 @@
+// tsconfig.json
+{
+    "compilerOptions": {
+      "target": "ES2024",
+      "module": "CommonJS",
+      "strict": true,
+      "moduleResolution": "Node",
+      "baseUrl": ".", // enables absolute imports
+      "paths": {
+        "*": ["*"]
+      },
+      "esModuleInterop": true,
+      "skipLibCheck": true
+    },
+    "include": ["**/*.ts", "**/*.tsx"]
+  }
+  

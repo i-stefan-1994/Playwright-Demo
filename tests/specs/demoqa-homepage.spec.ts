@@ -2,8 +2,9 @@
 
 import { expect, test } from "playwright/test";
 import { POM_Manager } from "../pages/pom_manager";
+import { MyFixtures } from "tests/utils/fixtures";
 
-let pom_manager; 
+let pom_manager: MyFixtures['pom_manager']; 
 
 test('Main page tests', async ({page}) => {
 

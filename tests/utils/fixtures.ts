@@ -3,7 +3,7 @@ import {test as base, Page} from '@playwright/test';
 
 //more details about playwright fixtures https://playwright.dev/docs/test-fixtures
 
-type MyFixtures = {
+export type MyFixtures = {
     pom_manager: POM_Manager;
     page: Page
 };

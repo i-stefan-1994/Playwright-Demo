@@ -1,6 +1,6 @@
-import {test, expect} from '../utils/fixtures';
+import {test, expect, MyFixtures} from '../utils/fixtures';
 
-let elementsPage;
+let elementsPage: ReturnType<MyFixtures['pom_manager']['getDemoQA_ElementsPage']>;
 const userData = {
     username: 'Tester',
     email: 'test@test.com',

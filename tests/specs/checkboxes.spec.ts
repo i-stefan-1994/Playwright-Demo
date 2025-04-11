@@ -1,8 +1,11 @@
 import { test } from "../utils/fixtures";
+import type { MyFixtures } from '../utils/fixtures';
 
-let checkboxPage;
 
 test.describe("Checkbox tests", () => {
+
+    let checkboxPage: ReturnType<MyFixtures['pom_manager']['getDemoQA_CheckboxPage']>;
+    
     test.beforeEach(async ({ pom_manager, page }) => {
         checkboxPage = pom_manager.getDemoQA_CheckboxPage();
         await checkboxPage.navigateToCheckboxPage();
@@ -46,7 +49,7 @@ test.describe("Checkbox tests", () => {
     });
 
     test('Check selected files for visibility - Desktop - Notes', async() => {
-        await checkboxPage.checkSelectedFilesResultVisibility('DesktopNotes', 'not-visible');
+        await checkboxPage.checkSelectedFilesResultVisibility('DesktopNotes', 'notVisible');
         await checkboxPage.extendAndCollapseFolderTreeByText('Home');
         await checkboxPage.extendAndCollapseFolderTreeByText('Desktop');
         await checkboxPage.checkFolderOrFile('DesktopNotes');
@@ -55,11 +58,13 @@ test.describe("Checkbox tests", () => {
     });
 
     test('Check selected files for visibility - Desktop - Commands', async() => {
-        await checkboxPage.checkSelectedFilesResultVisibility('DesktopCommands', 'not-visible');
+        await checkboxPage.checkSelectedFilesResultVisibility('DesktopCommands', 'notVisible');
         await checkboxPage.extendAndCollapseFolderTreeByText('Home');
         await checkboxPage.extendAndCollapseFolderTreeByText('Desktop');
         await checkboxPage.checkFolderOrFile('DesktopCommands');
         await checkboxPage.assertIsCheckedOrNot('DesktopCommands', 'is checked');
         await checkboxPage.checkSelectedFilesResultVisibility('DesktopCommands', 'visible');
     });
+
+    //abstract these tests using helper functions that use test.step? or something else
 });
