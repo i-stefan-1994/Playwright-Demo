@@ -5,7 +5,7 @@ import { checkboxLocators } from "../locators/checkbox-tests/checkboxLocators";
 import { selectedFiles } from "../locators/checkbox-tests/fileGroups";
 import { fileAndFolderLocators, fileAndFolderVisualLocators } from "../locators/checkbox-tests/filesAndFoldersLocatorMaps";
 
-type FolderNames = 'Home' | 'Desktop' | 'Documents' | 'DocumentsWorksSpace' | 'DocumentsOffice' | 'Downloads';
+type FolderNames = 'Home' | 'Desktop' | 'Documents' | 'DocumentsWorkspace' | 'DocumentsOffice' | 'Downloads';
 type VisibilityOptions = 'visible' | 'notVisible'
 type DesktopFileNames = 'DesktopNotes' | 'DesktopCommands';
 type FolderAndFileNames = FolderNames | DesktopFileNames
@@ -48,8 +48,17 @@ export class CheckboxPage extends CommonActions {
             for (let selectedFile of subfolderCategories) {
                 await this.checkIfVisibleOrNot(option, selectedFile);
             }
-        }else{
+        }else if(typeof subfolderCategories === 'string'){
            await this.checkIfVisibleOrNot(option, subfolderCategories);
         }
+    }
+
+    async checkDesktopFiles(file: FolderAndFileNames): Promise<void>{
+        await this.checkSelectedFilesResultVisibility('DesktopCommands', 'notVisible');
+        await this.extendAndCollapseFolderTreeByText('Home');
+        await this.extendAndCollapseFolderTreeByText('Desktop');
+        await this.checkFolderOrFile(file);
+        await this.assertIsCheckedOrNot(file, 'is checked');
+        await this.checkSelectedFilesResultVisibility(file, 'visible');
     }
 }

@@ -48,23 +48,12 @@ test.describe("Checkbox tests", () => {
         await checkboxPage.checkSelectedFilesResultVisibility('Desktop', 'visible');
     });
 
+
     test('Check selected files for visibility - Desktop - Notes', async() => {
-        await checkboxPage.checkSelectedFilesResultVisibility('DesktopNotes', 'notVisible');
-        await checkboxPage.extendAndCollapseFolderTreeByText('Home');
-        await checkboxPage.extendAndCollapseFolderTreeByText('Desktop');
-        await checkboxPage.checkFolderOrFile('DesktopNotes');
-        await checkboxPage.assertIsCheckedOrNot('DesktopNotes', 'is checked');
-        await checkboxPage.checkSelectedFilesResultVisibility('DesktopNotes', 'visible');
+       await checkboxPage.checkDesktopFiles('DesktopNotes');
     });
 
     test('Check selected files for visibility - Desktop - Commands', async() => {
-        await checkboxPage.checkSelectedFilesResultVisibility('DesktopCommands', 'notVisible');
-        await checkboxPage.extendAndCollapseFolderTreeByText('Home');
-        await checkboxPage.extendAndCollapseFolderTreeByText('Desktop');
-        await checkboxPage.checkFolderOrFile('DesktopCommands');
-        await checkboxPage.assertIsCheckedOrNot('DesktopCommands', 'is checked');
-        await checkboxPage.checkSelectedFilesResultVisibility('DesktopCommands', 'visible');
+        await checkboxPage.checkDesktopFiles('DesktopCommands');
     });
-
-    //abstract these tests using helper functions that use test.step? or something else
 });
